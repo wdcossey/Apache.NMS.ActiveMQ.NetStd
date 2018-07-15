@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Apache.NMS.ActiveMQ</RootNamespace>
+    <Product>Apache NMS for ActiveMQ Class Library</Product>
+    <Description>Apache NMS for ActiveMQ Class Library (.Net Messaging Library Implementation): An implementation of the NMS API for ActiveMQ</Description>
+    <Copyright>Copyright (C) 2005-2016 Apache Software Foundation</Copyright>
+    <AssemblyVersion>1.7.2.4108</AssemblyVersion>
+    <Version>1.7.2.4108</Version>
+    <Authors>Apache Software Foundation</Authors>
+    <Company />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ionic.Zlib.Core" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="src\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Apache.NMS.NetStd\Apache.NMS.NetStd.csproj" />
+  </ItemGroup>
+
+</Project>
