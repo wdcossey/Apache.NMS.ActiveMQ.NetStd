@@ -21,6 +21,7 @@ using System.Net.Sockets;
 using System.Net.Security;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
+using System.Linq;
 
 namespace Apache.NMS.ActiveMQ.Transport.Tcp
 {
@@ -323,14 +324,30 @@ namespace Apache.NMS.ActiveMQ.Transport.Tcp
             return collection;
         }
 
+#if NETSTANDARD2_0
+        // Support for SslProtocols.Ssl2 and SslProtocols.Ssl3 have been removed from .Net Standard/Core
+        private readonly string[] unsupportedSslProtocols = { SslProtocols.Ssl2.ToString(), SslProtocols.Ssl3.ToString() };        
+#endif
+
         private SslProtocols GetAllowedProtocol() 
         {
+#if NETSTANDARD2_0
+            if (!String.IsNullOrEmpty(SslProtocol) && !this.unsupportedSslProtocols.Contains(SslProtocol, StringComparer.InvariantCultureIgnoreCase))
+#else
             if (!String.IsNullOrEmpty(SslProtocol))
+#endif
             {
                 return (SslProtocols)Enum.Parse(typeof(SslProtocols), SslProtocol, true);
             }
 
-            return SslProtocols.Default;
+            var result = SslProtocols.Default;
+
+#if NETSTANDARD2_0
+            // Support for SslProtocols.Ssl2 and SslProtocols.Ssl3 have been removed from .Net Standard/Core
+            result = result & ~(SslProtocols.Ssl2 | SslProtocols.Ssl3);
+#endif
+
+            return result;
         }
     }
 }
