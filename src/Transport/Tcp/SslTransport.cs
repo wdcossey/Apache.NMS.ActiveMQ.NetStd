@@ -17,11 +17,11 @@
 
 using System;
 using System.IO;
-using System.Net.Sockets;
+using System.Linq;
 using System.Net.Security;
+using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
-using System.Linq;
 
 namespace Apache.NMS.ActiveMQ.Transport.Tcp
 {
@@ -150,6 +150,7 @@ namespace Apache.NMS.ActiveMQ.Transport.Tcp
                 sslStream.AuthenticateAsClient(remoteCertName, LoadClientCertificates(), GetAllowedProtocol(), false);
                 Tracer.Debug("Server is Authenticated = " + sslStream.IsAuthenticated);
                 Tracer.Debug("Server is Encrypted = " + sslStream.IsEncrypted);
+                Tracer.Debug("Server SSL Protocol = " + sslStream.SslProtocol);
             }
             catch(Exception e)
             {
@@ -324,15 +325,16 @@ namespace Apache.NMS.ActiveMQ.Transport.Tcp
             return collection;
         }
 
-#if NETSTANDARD2_0
+#if NETCORE
         // Support for SslProtocols.Ssl2 and SslProtocols.Ssl3 have been removed from .Net Standard/Core
         private readonly string[] unsupportedSslProtocols = { SslProtocols.Ssl2.ToString(), SslProtocols.Ssl3.ToString() };        
 #endif
 
         private SslProtocols GetAllowedProtocol() 
         {
-#if NETSTANDARD2_0
-            if (!String.IsNullOrEmpty(SslProtocol) && !this.unsupportedSslProtocols.Contains(SslProtocol, StringComparer.InvariantCultureIgnoreCase))
+#if NETCORE
+            //Strip out SslProtocols.Ssl2 or SslProtocols.Ssl3 if given
+            if (!string.IsNullOrEmpty(SslProtocol) && !this.unsupportedSslProtocols.Contains(SslProtocol, StringComparer.InvariantCultureIgnoreCase))
 #else
             if (!String.IsNullOrEmpty(SslProtocol))
 #endif
@@ -340,10 +342,15 @@ namespace Apache.NMS.ActiveMQ.Transport.Tcp
                 return (SslProtocols)Enum.Parse(typeof(SslProtocols), SslProtocol, true);
             }
 
+#if NETCORE
+            //Force SslProtocols.Tls11 and SslProtocols.Tls12 (for Unix based systems)
+            var result = SslProtocols.Default | SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12;
+#else
             var result = SslProtocols.Default;
+#endif
 
-#if NETSTANDARD2_0
-            // Support for SslProtocols.Ssl2 and SslProtocols.Ssl3 have been removed from .Net Standard/Core
+#if NETCORE
+            // Strip SslProtocols.Ssl2 and SslProtocols.Ssl3 from SslProtocols.Default
             result = result & ~(SslProtocols.Ssl2 | SslProtocols.Ssl3);
 #endif
 

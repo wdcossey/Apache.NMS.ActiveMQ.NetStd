@@ -6,8 +6,8 @@
     <Product>Apache NMS for ActiveMQ Class Library for .net standard</Product>
     <Description>Apache NMS for ActiveMQ Class Library (.Net Standard Messaging Library Implementation): An implementation of the NMS API for ActiveMQ</Description>
     <Copyright>Copyright (C) 2005-2016 Apache Software Foundation</Copyright>
-    <AssemblyVersion>1.7.2.4112</AssemblyVersion>
-    <Version>1.7.2.4112</Version>
+    <AssemblyVersion>1.7.2.4113</AssemblyVersion>
+    <Version>1.7.2.4113</Version>
     <Authors>Apache Software Foundation, William D Cossey</Authors>
     <Company>Apache Software Foundation, William D Cossey</Company>
     <RepositoryUrl>https://github.com/wdcossey/Apache.NMS.ActiveMQ.NetStd</RepositoryUrl>
@@ -16,17 +16,22 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>Apache.NMS.ActiveMQ (http://activemq.apache.org/nms/apachenmsactivemq.html) for .NET Standard.
-Disabled support for SslProtocols.Ssl2 and SslProtocols.Ssl3.</PackageReleaseNotes>
-    <PackageTags>Apache,NMS,Messaging,NetStandard</PackageTags>
+Forced SslProtocols.Tls11 and SslProtocols.Tls12 (for Unix based systems).
+Added CLSCompliant assembly info.</PackageReleaseNotes>
+    <PackageTags>Apache,NMS,Messaging,ActiveMQ,Openwire,NetStandard</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETCORE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;NETCORE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Apache.NMS.NetStd" Version="1.7.1.3897" />
+    <PackageReference Include="Apache.NMS.NetStd" Version="1.7.1.3898" />
     <PackageReference Include="Ionic.Zlib.Core" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="src\" />
   </ItemGroup>
 
 </Project>
