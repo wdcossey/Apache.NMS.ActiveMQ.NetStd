@@ -325,36 +325,17 @@ namespace Apache.NMS.ActiveMQ.Transport.Tcp
             return collection;
         }
 
-#if NETCORE
-        // Support for SslProtocols.Ssl2 and SslProtocols.Ssl3 have been removed from .Net Standard/Core
-        private readonly string[] unsupportedSslProtocols = { SslProtocols.Ssl2.ToString(), SslProtocols.Ssl3.ToString() };        
-#endif
-
-        private SslProtocols GetAllowedProtocol() 
+        private SslProtocols GetAllowedProtocol()
         {
-#if NETCORE
-            //Strip out SslProtocols.Ssl2 or SslProtocols.Ssl3 if given
-            if (!string.IsNullOrEmpty(SslProtocol) && !this.unsupportedSslProtocols.Contains(SslProtocol, StringComparer.InvariantCultureIgnoreCase))
-#else
-            if (!String.IsNullOrEmpty(SslProtocol))
-#endif
+            if (!string.IsNullOrEmpty(SslProtocol)
+                && !SslTransportManager.UnsupportedSslProtocols.Select(s => s.ToString())
+                    .Contains(SslProtocol, StringComparer.InvariantCultureIgnoreCase))
             {
-                return (SslProtocols)Enum.Parse(typeof(SslProtocols), SslProtocol, true);
+                return (SslProtocols) Enum.Parse(typeof(SslProtocols), SslProtocol, true);
             }
 
-#if NETCORE
-            //Force SslProtocols.Tls11 and SslProtocols.Tls12 (for Unix based systems)
-            var result = SslProtocols.Default | SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12;
-#else
-            var result = SslProtocols.Default;
-#endif
-
-#if NETCORE
-            // Strip SslProtocols.Ssl2 and SslProtocols.Ssl3 from SslProtocols.Default
-            result = result & ~(SslProtocols.Ssl2 | SslProtocols.Ssl3);
-#endif
-
-            return result;
+            return SslTransportManager.AllowedProtocols &
+                   ~(SslProtocols) SslTransportManager.UnsupportedSslProtocols.Cast<int>().Sum();
         }
     }
 }
