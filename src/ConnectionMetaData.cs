@@ -52,7 +52,8 @@ namespace Apache.NMS.ActiveMQ
 
 			foreach(AssemblyName name in self.GetReferencedAssemblies())
 			{
-				if(0 == string.Compare(name.Name, "Apache.NMS", true))
+				if(0 == string.Compare(name.Name, "Apache.NMS", true) || 
+                    0 == string.Compare(name.Name, "Apache.NMS.NetStd", true))
 				{
 					this.nmsMajorVersion = name.Version.Major;
 					this.nmsMinorVersion = name.Version.Minor;
