@@ -50,20 +50,19 @@ namespace Apache.NMS.ActiveMQ
 			this.nmsxProperties =
 				new String[]{ "NMSXGroupID", "NMSXGroupSeq", "NMSXDeliveryCount", "NMSXProducerTXID" };
 
-			foreach(AssemblyName name in self.GetReferencedAssemblies())
-			{
-				if(0 == string.Compare(name.Name, "Apache.NMS", true) || 
-                    0 == string.Compare(name.Name, "Apache.NMS.NetStd", true))
-				{
-					this.nmsMajorVersion = name.Version.Major;
-					this.nmsMinorVersion = name.Version.Minor;
-					this.nmsVersion = name.Version.ToString();
+            foreach (AssemblyName name in self.GetReferencedAssemblies())
+            {
+                if (0 == string.Compare(name.Name, "Apache.NMS", true))
+                {
+                    this.nmsMajorVersion = name.Version.Major;
+                    this.nmsMinorVersion = name.Version.Minor;
+                    this.nmsVersion = name.Version.ToString();
 
-					return;
-				}
-			}
+                    return;
+                }
+            }
 
-			throw new NMSException("Could not find a reference to the Apache.NMS Assembly.");
+            throw new NMSException("Could not find a reference to the Apache.NMS Assembly.");
 		}
 
 		public int NMSMajorVersion
