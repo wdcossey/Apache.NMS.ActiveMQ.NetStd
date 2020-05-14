@@ -54,7 +54,7 @@ namespace Apache.NMS.ActiveMQ.Transport.Tcp
         /// <summary>
         /// Size in bytes of the receive buffer.
         /// </summary>
-        private int receiveBufferSize = 8192;
+        private int receiveBufferSize = TcpTransportManager.ReceiveBufferSize;
         public int ReceiveBufferSize
         {
             get { return receiveBufferSize; }
@@ -64,7 +64,7 @@ namespace Apache.NMS.ActiveMQ.Transport.Tcp
         /// <summary>
         /// Size in bytes of send buffer.
         /// </summary>
-        private int sendBufferSize = 8192;
+        private int sendBufferSize = TcpTransportManager.SendBufferSize;
         public int SendBufferSize
         {
             get { return sendBufferSize; }
@@ -183,11 +183,6 @@ namespace Apache.NMS.ActiveMQ.Transport.Tcp
 		protected virtual ITransport DoCreateTransport(Uri location, Socket socket, IWireFormat wireFormat )
 		{
 			TcpTransport transport = new TcpTransport(location, socket, wireFormat);
-
-			// Apply the buffer sizes to the transport also so that it can buffer above the
-			// TCP level which can eagerly send causing sparse packets.
-			transport.SendBufferSize = SendBufferSize;
-			transport.ReceiveBufferSize = ReceiveBufferSize;
 
 			return transport;
 		}

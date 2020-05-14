@@ -6,8 +6,8 @@
     <Product>Apache NMS for ActiveMQ Class Library for .net standard</Product>
     <Description>Apache NMS for ActiveMQ Class Library (.Net Standard Messaging Library Implementation): An implementation of the NMS API for ActiveMQ</Description>
     <Copyright>Copyright (C) 2005-2016 Apache Software Foundation</Copyright>
-    <AssemblyVersion>1.7.2.4115</AssemblyVersion>
-    <Version>1.7.2.4115</Version>
+    <AssemblyVersion>1.7.2.4116</AssemblyVersion>
+    <Version>1.7.2.4116-preview</Version>
     <Authors>Apache Software Foundation, William D Cossey</Authors>
     <Company>Apache Software Foundation, William D Cossey</Company>
     <RepositoryUrl>https://github.com/wdcossey/Apache.NMS.ActiveMQ.NetStd</RepositoryUrl>
