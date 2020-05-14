@@ -22,6 +22,7 @@ Added CLSCompliant assembly info.</PackageReleaseNotes>
     <AssemblyName>Apache.NMS.ActiveMQ</AssemblyName>
     <PackageId>Apache.NMS.ActiveMQ.NetStd</PackageId>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageIcon>activemq-icon.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -38,6 +39,10 @@ Added CLSCompliant assembly info.</PackageReleaseNotes>
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="assets\activemq-icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
     <None Include="LICENSE.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
