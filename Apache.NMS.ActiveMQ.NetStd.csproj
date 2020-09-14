@@ -6,7 +6,7 @@
     <Product>Apache NMS for ActiveMQ Class Library for .net standard</Product>
     <Description>Apache NMS for ActiveMQ Class Library (.Net Standard Messaging Library Implementation): An implementation of the NMS API for ActiveMQ</Description>
     <Copyright>Copyright (C) 2005-2016 Apache Software Foundation</Copyright>
-    <AssemblyVersion>1.7.3.0</AssemblyVersion>
+    <AssemblyVersion>1.8.0.0</AssemblyVersion>
     <Version>1.7.3.0</Version>
     <Authors>Apache Software Foundation, William D Cossey</Authors>
     <Company>Apache Software Foundation, William D Cossey</Company>
@@ -23,6 +23,7 @@ Added CLSCompliant assembly info.</PackageReleaseNotes>
     <PackageId>Apache.NMS.ActiveMQ.NetStd</PackageId>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageIcon>activemq-icon.png</PackageIcon>
+    <PackageVersion>1.8.0.0-alpha</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -34,7 +35,7 @@ Added CLSCompliant assembly info.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Apache.NMS.NetStd" Version="1.7.1.3899" />
+    <PackageReference Include="Apache.NMS" Version="1.8.0" />
     <PackageReference Include="Ionic.Zlib.Core" Version="1.0.0" />
   </ItemGroup>
 
